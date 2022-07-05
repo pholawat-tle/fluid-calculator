@@ -1,11 +1,20 @@
 import type { NextPage } from "next";
 import styled from "styled-components";
+import LineChart from "../components/LineChart";
+
+const data = [
+  { x: 0, y: 2 },
+  { x: 450, y: 2 },
+  { x: 1920, y: 3 },
+  { x: 1920 + 450, y: 3 },
+];
 
 const Home: NextPage = () => {
   return (
     <MaxWidthWrapper>
       <Card>
         <h1>Fluid Calculator</h1>
+        <StyledLineChart data={data} />
       </Card>
     </MaxWidthWrapper>
   );
@@ -30,6 +39,10 @@ const Card = styled.div`
   width: 100%;
 
   background-color: hsl(0deg, 0%, 95%);
+`;
+
+const StyledLineChart = styled(LineChart)`
+  height: 450px;
 `;
 
 export default Home;
