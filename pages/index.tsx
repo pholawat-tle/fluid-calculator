@@ -9,7 +9,7 @@ function reducer(state: any, action: any) {
 }
 
 const Home: NextPage = () => {
-  const [{ minSize, maxSize, minViewport, maxViewport }, _update] = useReducer(
+  const [{ minSize, maxSize, minViewport, maxViewport }, update] = useReducer(
     reducer,
     {
       minSize: 2,
@@ -26,6 +26,15 @@ const Home: NextPage = () => {
     { x: maxViewport + minViewport, y: maxSize / 10 },
   ];
 
+  function handleChange(key: string) {
+    return function (event: ChangeEvent<HTMLInputElement>) {
+      const action: any = {};
+      action[key] = parseInt(event.target.value);
+
+      update(action);
+    };
+  }
+
   return (
     <MaxWidthWrapper>
       <Card>
@@ -36,33 +45,25 @@ const Home: NextPage = () => {
             min={0}
             max={1920}
             value={minViewport}
-            onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              _update({ minViewport: parseInt(event.target.value) || 0 })
-            }
+            onChange={handleChange("minViewport")}
           />
           <SliderInput
             min={0}
             max={1920}
             value={maxViewport}
-            onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              _update({ maxViewport: parseInt(event.target.value) || 1 })
-            }
+            onChange={handleChange("maxViewport")}
           />
           <SliderInput
             min={0}
             max={50}
             value={minSize}
-            onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              _update({ minSize: parseInt(event.target.value) || 0 })
-            }
+            onChange={handleChange("minSize")}
           />
           <SliderInput
             min={0}
             max={50}
             value={maxSize}
-            onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              _update({ maxSize: parseInt(event.target.value) || 1 })
-            }
+            onChange={handleChange("maxSize")}
           />
         </Controls>
       </Card>
